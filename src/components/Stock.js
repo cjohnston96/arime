@@ -1,4 +1,5 @@
 import React from 'react';
+import './Stock.css';
 
 export default class Stock extends React.Component {
     constructor(props) {
@@ -14,9 +15,10 @@ export default class Stock extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
+                    console.log(result)
                 this.setState({
                     isLoaded: true,
-                    stocks: result.stocks
+                    stocks: result
                 });
                 },
                 (error) => {
@@ -41,10 +43,9 @@ export default class Stock extends React.Component {
         } else {
         return(
             <ul>
-                {stocks.map(stock =>(
-                    <li key = {stock.name}>
-                        {stock.name}
-                        {stock.data}
+                {stocks.data.map(stock =>(
+                    <li key={stock.Date}>
+                        {stock.Date}: ${stock.Close}
                     </li>
                 ))}
             </ul>
