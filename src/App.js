@@ -8,10 +8,16 @@ class App extends React.Component {
     visible: true
   }
 
+
+  
   render() {
     return (
-      <div className="App">
-        <Stock />
+      <div className="Main">
+
+        <div className="App">
+          <Stock />
+        </div>
+
       </div>
     );
   }
