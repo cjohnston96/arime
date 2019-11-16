@@ -2,7 +2,7 @@ import React from 'react';
 import Stock from './components/Stock';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-let choice;
+import List from './components/List';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class App extends React.Component {
               // exact component={Home}
         />
         <Route path="/stocks"
-              component={Stock}
+              component={List}
         />
         <Route path="/stocks/:name" render={routerProps => (
           <Stock
