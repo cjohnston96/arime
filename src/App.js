@@ -13,7 +13,7 @@ export default class App extends React.Component {
     this.setStock = this.setStock.bind(this);
   }
 
-  setStock(name, choice) {
+  setStock(name) {
     this.setState({ name: name });
   }
 
@@ -31,7 +31,7 @@ export default class App extends React.Component {
               // exact component={Home}
         />
         <Route path="/stocks"
-              component={List}
+              exact component={List}
         />
         <Route path="/stocks/:name" render={routerProps => (
           <Stock
@@ -39,10 +39,6 @@ export default class App extends React.Component {
             {...routerProps}
             {...this.state}/>)}                 
           />
-        {/* <div className="App">
-          <Stock />
-        </div> */}
-
       </div>
       </Router>
     );
