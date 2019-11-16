@@ -3,6 +3,7 @@ import Stock from './components/Stock';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import List from './components/List';
+import Home from './components/Home'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,20 +27,22 @@ export default class App extends React.Component {
           </Link>
           <Link to="/stocks">Stocks</Link>
         </nav>
-      <div className="Main">
-        <Route path="/"
-              // exact component={Home}
-        />
-        <Route path="/stocks"
-              exact component={List}
-        />
-        <Route path="/stocks/:name" render={routerProps => (
-          <Stock
-            setName={this.setName}
-            {...routerProps}
-            {...this.state}/>)}                 
+        <div className="Main">
+          <Route path="/" 
+            // exact component={Home}
           />
-      </div>
+          <Route path="/stocks"
+                exact component={List}
+          />
+
+          <Route path="/stocks/:name" render={routerProps => (
+            <Stock
+              setName={this.setName}
+              {...routerProps}
+              {...this.state}/>)}                 
+            />
+            
+        </div>
       </Router>
     );
   }
