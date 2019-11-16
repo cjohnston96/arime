@@ -1,6 +1,7 @@
 import React from 'react';
 import './Stock.css';
 import Plot from 'react-plotly.js';
+const choice = 'Snap';
 
 
 export default class Stock extends React.Component {
@@ -13,7 +14,8 @@ export default class Stock extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api-project-backend.herokuapp.com/Apple")
+        
+        fetch(`https://api-project-backend.herokuapp.com/${choice}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -44,9 +46,15 @@ export default class Stock extends React.Component {
                 <div>Fetching data...</div>
             )
         } else {
+            
             let closeArr = this.state.stocks.data.map(stock => {
                 return stock.Close;
             })
+
+            let dateArr = this.state.stocks.data.map(stock => {
+                return stock.Date;
+            })
+
         return(
             <div>
                 <ul>
@@ -61,12 +69,19 @@ export default class Stock extends React.Component {
                 <Plot 
                     data = {[
                     {
-                        x: [...Array(1258).keys()],
+                        x: dateArr,
                         y: closeArr,
-                        type: 'scattergl',
+                        type: 'scatter',
+                        mode: 'lines',
                         name: 'test'
                     }
                     ]}
+
+                    layout = {{ title:`${choice} Closing Prices from Nov 2014 - Nov 2019`,
+                                xaxis: {rangeslider: {range: [dateArr[0], '2019-11-11']},
+                                type: 'date'},
+                                yaxis: {autorange: true}
+                            }}
                 />
 
             </div>
