@@ -1,1 +1,39 @@
+html {
+    background-color: #e3f2fd;
+}
 
+.Body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-left: 30px;
+    padding-top: 30px;
+    background-color: #e3f2fd;
+}
+
+nav {
+    background-color: #e3f2fd;
+}
+
+.Main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    background-color: #e3f2fd;
+}
+
+p {
+    padding: 10px 0;
+}
+
+.stocksLink {
+    font-size: 26px;
+    padding-bottom: 30px;
+}
+
+.svg-container {
+    background-color: #e3f2fd;
+
+}
