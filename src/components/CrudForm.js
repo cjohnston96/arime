@@ -22,6 +22,7 @@ export default class CrudForm extends Component {
                 }]
             },
             newStockModal: false,
+            editStockModal: false
         }
     }
 
@@ -36,7 +37,7 @@ export default class CrudForm extends Component {
     toggleNewStockModal() {
         this.setState({
             newStockModal: !this.state.newStockModal
-        })
+        });
     }
 
     addStock() {
@@ -52,13 +53,30 @@ export default class CrudForm extends Component {
                     Date: '',
                     Close: null
                 }]
-            } })
-        })
+            } });
+        });
     }
 
     editStockData(name, data) {
-        console.log(name);
-        console.log(data);
+        this.setState({
+            editStock: { name, data }, 
+            editStockModal: !this.state.editStockModal
+        });
+    }
+
+    toggleEditStockModal() {
+        this.setState({
+            editStockModal: !this.state.editStockModal
+        });
+    }
+
+    updateStock() {
+        let { name, data } = this.state.editStock.name;
+        axios.put("https://api-project-backend.herokuapp.com/", this.state.editStock.name, {
+            name, data
+        }).then((Response) => {
+            console.log(Response.data)
+        });
     }
 
     render() {
@@ -77,7 +95,7 @@ export default class CrudForm extends Component {
             <div className="FormContainer">
 
                 <Button color="primary" size="sm" className="my-2"onClick={this.toggleNewStockModal.bind(this)}>Add</Button>
-
+            {/* CREATE MODAL */}
                 <Modal isOpen={this.state.newStockModal} toggle={this.toggleNewStockModal.bind(this)} className={this.props.className}>
 
                     <ModalHeader toggle={this.toggleNewStockModal.bind(this)}>Modal title</ModalHeader>
@@ -96,12 +114,16 @@ export default class CrudForm extends Component {
                             <Label for="Data"></Label>
                             <Input type="string" placeholder="YYYY-MM-DD" value={this.state.newStock.Date} onChange={(e) => {
                                 let {newStock} = this.state;
-                                newStock.data.Date = e.target.value;
+                                newStock.data.map(stock=> { 
+                                    return stock.Date = e.target.value;
+                                })
                                 this.setState({newStock});
                             }}/>
                             <Input type="number" placeholder="Closing Price" value={this.state.newStock.Close} onChange={(e) => {
                                 let {newStock} = this.state;
-                                newStock.data.Close = e.target.value;
+                                newStock.data.map(stock => {
+                                    return stock.Close = e.target.value;
+                                })
                                 this.setState({newStock});
                             }}/>
                         </FormGroup>
@@ -113,6 +135,49 @@ export default class CrudForm extends Component {
                     </ModalFooter>
 
                 </Modal>
+
+
+            {/* UPDATE MODAL */}
+                <Modal isOpen={this.state.editStockModal} toggle={this.toggleEditStockModal.bind(this)} className={this.props.className}>
+
+                    <ModalHeader toggle={this.toggleEditStockModal.bind(this)}>Modal title</ModalHeader>
+                    <ModalBody>
+
+                        <FormGroup>
+                            <Label for="Stock"></Label>
+                            <Input type="name" placeholder="Stock Name" value={this.state.editStock.name} onChange={(e) => {
+                                let {editStock} = this.state;
+                                editStock.name = e.target.value;
+                                this.setState({editStock});
+                            }}/>
+                        </FormGroup>
+
+                        <FormGroup>
+                            <Label for="Data"></Label>
+                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock.Date} onChange={(e) => {
+                                let {editStock} = this.state;
+                                editStock.data.map(stock=> { 
+                                    return stock.Date = e.target.value;
+                                })
+                                this.setState({editStock});
+                            }}/>
+                            <Input type="number" placeholder="Closing Price" value={this.state.editStock.Close} onChange={(e) => {
+                                let {editStock} = this.state;
+                                editStock.data.map(stock => {
+                                    return stock.Close = e.target.value;
+                                })
+                                this.setState({editStock});
+                            }}/>
+                        </FormGroup>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button color="success" onClick={this.updateStock.bind(this)}>Edit Stock</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleEditStockModal.bind(this)}>Cancel</Button>
+                    </ModalFooter>
+
+                </Modal>
+
 
                 <Table>
                     <thead>
