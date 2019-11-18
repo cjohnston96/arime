@@ -27,11 +27,6 @@ export default class CrudForm extends Component {
     }
 
     componentWillMount() {
-        // axios.get("https://api-project-backend.herokuapp.com/").then((Response) => {
-        //     this.setState({
-        //         stocks: Response.data
-        //     });
-        // });
         this.refreshStocks();
     }
 
@@ -61,7 +56,7 @@ export default class CrudForm extends Component {
     updateStock() {
         let { name, data } = this.state.editStock;
 
-        axios.post("https://api-project-backend.herokuapp.com/"+this.state.editStock.name, {
+        axios.patch("https://api-project-backend.herokuapp.com/"+this.state.editStock.name, {
             name, data
         }).then((Response) => {
             this.refreshStocks();
@@ -163,32 +158,32 @@ export default class CrudForm extends Component {
                     <ModalHeader toggle={this.toggleEditStockModal.bind(this)}>Modal title</ModalHeader>
                     <ModalBody>
 
-                        {/* <FormGroup>
+                        <FormGroup>
                             <Label for="Stock"></Label>
                             <Input type="name" placeholder="Stock Name" value={this.state.editStock.name} onChange={(e) => {
                                 let {editStock} = this.state;
                                 editStock.name = e.target.value;
                                 this.setState({editStock});
                             }}/>
-                        </FormGroup> */}
+                        </FormGroup>
 
-                        {/* <FormGroup>
+                        <FormGroup>
                             <Label for="Data"></Label>
-                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock.Date} onChange={(e) => {
+                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock} onChange={(e) => {
                                 let {editStock} = this.state;
                                 editStock.data.map(stock=> { 
                                     return stock.Date = e.target.value;
                                 })
                                 this.setState({editStock});
                             }}/>
-                            <Input type="number" placeholder="Closing Price" value={this.state.editStock.Close} onChange={(e) => {
+                            <Input type="number" placeholder="Closing Price" value={this.state.editStock} onChange={(e) => {
                                 let {editStock} = this.state;
                                 editStock.data.map(stock => {
                                     return stock.Close = e.target.value;
                                 })
                                 this.setState({editStock});
                             }}/>
-                        </FormGroup> */}
+                        </FormGroup>
 
                     </ModalBody>
 
