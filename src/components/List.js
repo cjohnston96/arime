@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import stockList from "./stockList.json"
+import stockList from "./stockList.json";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class List extends Component {
+
   render() {
     let list = stockList.map(item => {
       return (
