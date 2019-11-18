@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import List from './components/List';
 // import Home from './components/Home';
+import CrudForm from './components/CrudForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends React.Component {
@@ -28,6 +29,7 @@ export default class App extends React.Component {
               <h1>ARIMe</h1>
             </Link>
             <Link to="/stocks" className="stocksLink">Stocks</Link>
+            <Link to="/edit" className="crudForm">Edit Data</Link>
           </nav>
           <div className="Main">
             <Route path="/" 
@@ -36,7 +38,9 @@ export default class App extends React.Component {
             <Route path="/stocks"
                   exact component={List}
             />
-
+            <Route path="/edit"
+                  exact component={CrudForm}
+            />
             <Route path="/stocks/:name" render={routerProps => (
               <Stock
                 setName={this.setName}
