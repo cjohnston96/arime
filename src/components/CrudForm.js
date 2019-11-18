@@ -26,7 +26,7 @@ export default class CrudForm extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.refreshStocks();
     }
 
@@ -56,7 +56,7 @@ export default class CrudForm extends Component {
     updateStock() {
         let { name, data } = this.state.editStock;
 
-        axios.patch("https://api-project-backend.herokuapp.com/"+this.state.editStock.name, {
+        axios.patch("https://api-project-backend.herokuapp.com/"+this.state.editStock.name, this.state.editStock, {
             name, data
         }).then((Response) => {
             this.refreshStocks();
@@ -169,7 +169,7 @@ export default class CrudForm extends Component {
 
                         <FormGroup>
                             <Label for="Data"></Label>
-                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock} onChange={(e) => {
+                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock.Date} onChange={(e) => {
                                 let {editStock} = this.state;
                                 editStock.data.map(stock=> { 
                                     return stock.Date = e.target.value;
