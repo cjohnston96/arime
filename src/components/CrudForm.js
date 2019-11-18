@@ -57,6 +57,18 @@ export default class CrudForm extends Component {
         });
     }
 
+    updateStock() {
+        let { name } = this.state.editStock;
+
+        axios.put("https://api-project-backend.herokuapp.com/"+ this.state.editStock.name, {
+            name
+        }).then((Response) => {
+            this.refreshStocks();
+
+            console.log(Response.data)
+        });
+    }
+
     editStockData(name, data) {
         this.setState({
             editStock: { name, data }, 
@@ -70,13 +82,18 @@ export default class CrudForm extends Component {
         });
     }
 
-    updateStock() {
-        let { name, data } = this.state.editStock.name;
-        axios.put("https://api-project-backend.herokuapp.com/", this.state.editStock.name, {
-            name, data
-        }).then((Response) => {
-            console.log(Response.data)
+    
+
+    refreshStocks() {
+        axios.get("https://api-project-backend.herokuapp.com/").then((Response) => {
+            this.setState({
+                stocks: Response.data
+            });
         });
+    }
+
+    deleteStock(name) {
+
     }
 
     render() {
@@ -85,8 +102,8 @@ export default class CrudForm extends Component {
                 <tr key={stock.name}>
                     <td>{stock.name}</td>
                     <td>
-                        <Button color="success" size="sm" className="mr-1" onClick={this.editStockData.bind(this, stock.name, stock.data)}>Edit</Button>
-                        <Button color="danger" size="sm">Delete</Button>
+                        <Button color="success" size="sm" className="mr-1" onClick={this.editStockData.bind(this, stock.name)}>Edit</Button>
+                        <Button color="danger" size="sm" onClick={this.deleteStock.bind(this, stock.name)}>Delete</Button>
                     </td>
                 </tr>
             );
@@ -152,23 +169,6 @@ export default class CrudForm extends Component {
                             }}/>
                         </FormGroup>
 
-                        <FormGroup>
-                            <Label for="Data"></Label>
-                            <Input type="string" placeholder="YYYY-MM-DD" value={this.state.editStock.Date} onChange={(e) => {
-                                let {editStock} = this.state;
-                                editStock.data.map(stock=> { 
-                                    return stock.Date = e.target.value;
-                                })
-                                this.setState({editStock});
-                            }}/>
-                            <Input type="number" placeholder="Closing Price" value={this.state.editStock.Close} onChange={(e) => {
-                                let {editStock} = this.state;
-                                editStock.data.map(stock => {
-                                    return stock.Close = e.target.value;
-                                })
-                                this.setState({editStock});
-                            }}/>
-                        </FormGroup>
                     </ModalBody>
 
                     <ModalFooter>
